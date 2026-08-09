@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZEROOPS — Automatyzacja AI dla Twojego biznesu</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#060D1A;
+  --bg-surface:#0C1828;
+  --bg-border:#17304A;
+  --accent:#00D4A8;
+  --accent-on:#020A12;
+  --text:#DCE8F5;
+  --text-muted:#5A7896;
+  --text-dim:#243A52;
+  --radius:6px;
+}
+@media(prefers-color-scheme:light){
+  :root{
+    --bg:#F2F6FB;
+    --bg-surface:#FFFFFF;
+    --bg-border:#D0DDE9;
+    --accent:#00896A;
+    --accent-on:#FFFFFF;
+    --text:#0A1828;
+    --text-muted:#527090;
+    --text-dim:#B8CDD9;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#060D1A;--bg-surface:#0C1828;--bg-border:#17304A;
+  --accent:#00D4A8;--accent-on:#020A12;
+  --text:#DCE8F5;--text-muted:#5A7896;--text-dim:#243A52;
+}
+:root[data-theme="light"]{
+  --bg:#F2F6FB;--bg-surface:#FFFFFF;--bg-border:#D0DDE9;
+  --accent:#00896A;--accent-on:#FFFFFF;
+  --text:#0A1828;--text-muted:#527090;--text-dim:#B8CDD9;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:'Helvetica Neue',Arial,system-ui,sans-serif;
+  background:var(--bg);color:var(--text);
+  font-size:16px;line-height:1.6;overflow-x:hidden;
+}
+
+.ticker-wrap{
+  background:var(--accent);color:var(--accent-on);
+  overflow:hidden;height:34px;display:flex;align-items:center;
+}
+.ticker-inner{
+  display:flex;white-space:nowrap;
+  animation:ticker 35s linear infinite;
+}
+.ticker-inner span{
+  font-size:10px;font-weight:800;letter-spacing:.16em;
+  text-transform:uppercase;padding:0 28px;
+}
+.sep{opacity:.35}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 48px;position:sticky;top:0;z-index:100;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--bg-border);
+}
+.logo{
+  font-size:19px;font-weight:900;letter-spacing:-.03em;
+  color:var(--text);text-decoration:none;
+}
+.logo em{color:var(--accent);font-style:normal}
+.nav-btn{
+  font-size:13px;font-weight:700;letter-spacing:.04em;
+  background:var(--accent);color:var(--accent-on);
+  padding:9px 20px;border-radius:var(--radius);
+  text-decoration:none;transition:opacity .15s;
+}
+.nav-btn:hover{opacity:.82}
+
+.container{max-width:1200px;margin:0 auto;padding:0 48px}
+section{padding:96px 0}
+.label{
+  font-size:10px;font-weight:800;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.label::before{content:'';width:20px;height:2px;background:var(--accent)}
+
+.hero{
+  min-height:92vh;display:flex;align-items:center;
+  padding:72px 0;position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(var(--bg-border) 1px,transparent 1px),
+    linear-gradient(90deg,var(--bg-border) 1px,transparent 1px);
+  background-size:64px 64px;opacity:.12;pointer-events:none;
+  mask-image:radial-gradient(ellipse 60% 80% at 75% 50%,black,transparent);
+  -webkit-mask-image:radial-gradient(ellipse 60% 80% at 75% 50%,black,transparent);
+}
+.hero-inner{
+  display:grid;grid-template-columns:1fr 430px;
+  gap:56px;align-items:center;width:100%;
+}
+.hero-eyebrow{
+  font-size:10px;font-weight:800;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--accent);
+  margin-bottom:22px;display:flex;align-items:center;gap:10px;
+}
+.hero-eyebrow::before{content:'';width:20px;height:2px;background:var(--accent)}
+h1{
+  font-size:clamp(48px,6vw,82px);font-weight:900;
+  line-height:1.04;letter-spacing:-.035em;
+  text-wrap:balance;margin-bottom:22px;
+}
+h1 em{color:var(--accent);font-style:normal}
+.hero-sub{
+  font-size:17px;line-height:1.7;color:var(--text-muted);
+  max-width:480px;margin-bottom:36px;
+}
+.hero-metrics{
+  display:flex;gap:36px;margin-bottom:36px;
+  padding-bottom:36px;border-bottom:1px solid var(--bg-border);
+}
+.metric-val{
+  font-size:32px;font-weight:900;letter-spacing:-.04em;
+  line-height:1;color:var(--text);
+}
+.metric-val em{color:var(--accent);font-style:normal}
+.metric-lbl{
+  font-size:11px;color:var(--text-muted);
+  letter-spacing:.04em;margin-top:4px;
+}
+.hero-actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.btn-primary{
+  background:var(--accent);color:var(--accent-on);
+  font-size:14px;font-weight:700;padding:14px 26px;
+  border-radius:var(--radius);text-decoration:none;
+  letter-spacing:.02em;transition:opacity .15s;white-space:nowrap;
+}
+.btn-primary:hover{opacity:.84}
+.btn-ghost{
+  color:var(--text-muted);font-size:14px;font-weight:600;
+  text-decoration:none;transition:color .15s;
+}
+.btn-ghost:hover{color:var(--text)}
+
+.terminal{
+  background:var(--bg-surface);
+  border:1px solid var(--bg-border);
+  border-radius:10px;overflow:hidden;position:relative;z-index:1;
+  font-family:'SF Mono','Fira Code','Cascadia Code',monospace;font-size:13px;
+}
+.t-bar{
+  background:var(--bg-border);padding:10px 16px;
+  display:flex;align-items:center;gap:6px;
+}
+.dots{display:flex;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%}
+.dot-r{background:#FF5F56}.dot-y{background:#FFBD2E}.dot-g{background:#27C93F}
+.t-ttl{font-size:11px;color:var(--text-muted);margin-left:8px;letter-spacing:.04em}
+.t-body{padding:18px 18px 20px;display:flex;flex-direction:column;gap:13px}
+.t-row{
+  display:flex;align-items:flex-start;gap:10px;
+  opacity:0;animation:fadeUp .35s ease forwards;
+}
+.t-row:nth-child(1){animation-delay:.4s}
+.t-row:nth-child(2){animation-delay:1s}
+.t-row:nth-child(3){animation-delay:1.6s}
+.t-row:nth-child(4){animation-delay:2.2s}
+.t-row:nth-child(5){animation-delay:2.8s}
+.t-row:nth-child(6){animation-delay:3.4s}
+.t-ico{
+  width:18px;height:18px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;margin-top:1px;font-weight:700;
+}
+.t-ico.ok{background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent)}
+.t-ico.run{background:color-mix(in srgb,var(--text-muted) 12%,transparent);color:var(--text-muted)}
+.t-txt{color:var(--text-muted);line-height:1.45}
+.t-txt strong{color:var(--text);font-weight:600}
+.badge{
+  display:inline-block;font-size:9px;font-weight:800;
+  padding:1px 7px;border-radius:3px;letter-spacing:.07em;vertical-align:middle;margin-left:4px;
+}
+.badge-ok{background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent)}
+.badge-warn{background:color-mix(in srgb,#FFB830 12%,transparent);color:#FFB830}
+.t-cursor{
+  display:inline-block;width:7px;height:13px;
+  background:var(--accent);vertical-align:text-bottom;
+  animation:blink 1s step-end infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.t-foot{
+  border-top:1px solid var(--bg-border);padding:11px 18px;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:11px;color:var(--text-dim);
+}
+.t-status{display:flex;align-items:center;gap:6px}
+.t-pulse{
+  width:7px;height:7px;border-radius:50%;background:var(--accent);
+  animation:pulse 2.2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.65)}}
+
+.logos-wrap{
+  padding:36px 0;
+  border-top:1px solid var(--bg-border);
+  border-bottom:1px solid var(--bg-border);
+}
+.logos-lbl{
+  font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-dim);text-align:center;margin-bottom:22px;
+}
+.logos-row{
+  display:flex;gap:40px;justify-content:center;
+  align-items:center;flex-wrap:wrap;
+}
+.logo-tag{
+  font-size:13px;font-weight:700;letter-spacing:.04em;
+  color:var(--text-dim);transition:color .15s;cursor:default;
+}
+.logo-tag:hover{color:var(--text-muted)}
+
+.ps-wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  border:1px solid var(--bg-border);border-radius:10px;overflow:hidden;
+}
+.ps-col{background:var(--bg-surface);padding:44px}
+.ps-col:first-child{border-right:2px solid var(--bg-border)}
+.ps-head{
+  font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  padding-bottom:16px;margin-bottom:28px;border-bottom:1px solid var(--bg-border);
+}
+.ps-col:first-child .ps-head{color:var(--text-muted)}
+.ps-col:last-child .ps-head{color:var(--accent)}
+.ps-list{list-style:none;display:flex;flex-direction:column;gap:18px}
+.ps-list li{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;line-height:1.5}
+.ps-list li::before{flex-shrink:0;margin-top:1px;font-weight:700}
+.ps-col:first-child .ps-list li{color:var(--text-muted)}
+.ps-col:first-child .ps-list li::before{content:'✗';color:var(--text-dim)}
+.ps-col:last-child .ps-list li{color:var(--text)}
+.ps-col:last-child .ps-list li::before{content:'→';color:var(--accent)}
+
+.sec-head{margin-bottom:52px}
+.sec-head h2{
+  font-size:clamp(30px,4vw,46px);font-weight:900;
+  letter-spacing:-.03em;line-height:1.1;
+  text-wrap:balance;margin-bottom:14px;
+}
+.sec-head p{font-size:16px;color:var(--text-muted);max-width:520px;line-height:1.65}
+
+.srv-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:2px;border-radius:10px;overflow:hidden;
+}
+.srv-card{
+  background:var(--bg-surface);padding:36px;
+  border:1px solid var(--bg-border);
+  transition:border-color .2s;position:relative;
+  display:flex;flex-direction:column;
+}
+.srv-card:hover{border-color:var(--accent)}
+.srv-card.feat{border-color:var(--accent)}
+.srv-card.feat::before{
+  content:'Najpopularniejsze';
+  position:absolute;top:-1px;right:20px;
+  font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--accent);color:var(--accent-on);
+  padding:4px 10px;border-radius:0 0 4px 4px;
+}
+.srv-name{
+  font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:16px;
+}
+.srv-price{
+  font-size:38px;font-weight:900;letter-spacing:-.04em;
+  line-height:1;color:var(--text);margin-bottom:16px;
+}
+.srv-price small{
+  font-size:15px;font-weight:500;color:var(--text-muted);vertical-align:middle;
+}
+.srv-desc{
+  font-size:13.5px;color:var(--text-muted);line-height:1.55;
+  padding-top:18px;border-top:1px solid var(--bg-border);margin-bottom:22px;
+}
+.srv-feat{list-style:none;display:flex;flex-direction:column;gap:11px;flex:1;margin-bottom:28px}
+.srv-feat li{
+  font-size:13.5px;color:var(--text);
+  display:flex;gap:9px;align-items:flex-start;line-height:1.4;
+}
+.srv-feat li::before{content:'→';color:var(--accent);flex-shrink:0;font-weight:700}
+.srv-cta{
+  display:block;text-align:center;font-size:13px;font-weight:700;
+  padding:11px;border-radius:var(--radius);text-decoration:none;
+  letter-spacing:.04em;transition:all .15s;
+}
+.srv-card.feat .srv-cta{background:var(--accent);color:var(--accent-on)}
+.srv-card:not(.feat) .srv-cta{
+  border:1px solid var(--bg-border);color:var(--text-muted);
+}
+.srv-card:not(.feat):hover .srv-cta{border-color:var(--accent);color:var(--accent)}
+
+.proc-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  position:relative;
+}
+.proc-grid::before{
+  content:'';position:absolute;top:27px;
+  left:calc(12.5% + 28px);right:calc(12.5% + 28px);
+  height:1px;background:var(--bg-border);
+}
+.proc-step{padding:0 20px;padding-top:54px;position:relative}
+.proc-num{
+  width:54px;height:54px;border-radius:50%;
+  background:var(--bg-surface);border:1px solid var(--bg-border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;
+  font-family:'SF Mono','Fira Code',monospace;
+  color:var(--accent);position:absolute;top:0;
+  letter-spacing:.04em;
+}
+.proc-title{font-size:16px;font-weight:700;margin-bottom:10px;letter-spacing:-.01em}
+.proc-desc{font-size:13.5px;color:var(--text-muted);line-height:1.6}
+
+.cta-final{
+  background:var(--bg-surface);
+  border-top:1px solid var(--bg-border);
+  border-bottom:1px solid var(--bg-border);
+  text-align:center;padding:96px 0;
+}
+.cta-final h2{
+  font-size:clamp(34px,5vw,54px);font-weight:900;
+  letter-spacing:-.03em;text-wrap:balance;margin-bottom:14px;
+}
+.cta-final p{font-size:17px;color:var(--text-muted);margin-bottom:36px}
+.cta-group{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-outline{
+  font-size:14px;font-weight:600;padding:13px 26px;
+  border-radius:var(--radius);text-decoration:none;
+  border:1px solid var(--bg-border);color:var(--text-muted);
+  transition:all .15s;
+}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.cta-sub{font-size:12px;color:var(--text-dim);margin-top:22px}
+
+footer{
+  padding:28px 48px;display:flex;
+  justify-content:space-between;align-items:center;
+  border-top:1px solid var(--bg-border);
+  font-size:12px;color:var(--text-muted);
+}
+.footer-logo{font-weight:900;letter-spacing:-.02em;font-size:15px;color:var(--text)}
+.footer-logo em{color:var(--accent);font-style:normal}
+
+.ads-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px}
+.fb-card{
+  border-radius:10px;overflow:hidden;
+  border:1px solid #E4E6EB;background:#fff;
+  font-family:-apple-system,'Segoe UI',sans-serif;
+  color:#050505;box-shadow:0 2px 16px rgba(0,0,0,.09);
+  display:flex;flex-direction:column;
+}
+.fb-hd{padding:12px;display:flex;align-items:center;gap:10px}
+.fb-av{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,#060D1A,#00D4A8);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:900;color:#fff;letter-spacing:-.02em;
+}
+.fb-nm{font-size:13px;font-weight:700;line-height:1.2;color:#050505}
+.fb-sp{font-size:11px;color:#65676B;display:flex;align-items:center;gap:3px}
+.fb-txt{padding:0 12px 11px;font-size:13px;line-height:1.5;color:#050505}
+.fb-txt strong{font-weight:700}
+.fb-media{width:100%;aspect-ratio:1;position:relative;overflow:hidden}
+.fb-media-video{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden}
+.ad-fill{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;color:#fff}
+.ad-bg-1{background:linear-gradient(135deg,#060D1A 0%,#0C2040 55%,#00D4A8 100%)}
+.ad-bg-2{background:linear-gradient(155deg,#1A0050 0%,#4A0080 55%,#FF6B35 100%)}
+.ad-stat{font-size:56px;font-weight:900;letter-spacing:-.04em;line-height:1}
+.ad-stat-lbl{font-size:13px;opacity:.65;margin-top:6px;letter-spacing:.04em}
+.ad-badge{
+  margin-top:18px;font-size:9px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;background:rgba(255,255,255,.12);
+  color:rgba(255,255,255,.7);padding:4px 10px;border-radius:3px;
+}
+.ad-headline{font-size:22px;font-weight:900;line-height:1.15;letter-spacing:-.02em;margin-bottom:10px}
+.ad-sub{font-size:13px;opacity:.65;line-height:1.4}
+.fb-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.28)}
+.fb-play-btn{
+  width:54px;height:54px;background:rgba(255,255,255,.92);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+}
+.fb-play-btn::after{
+  content:'';width:0;height:0;border-style:solid;
+  border-width:10px 0 10px 19px;
+  border-color:transparent transparent transparent #050505;margin-left:4px;
+}
+.fb-cta-bar{
+  border-top:1px solid #E4E6EB;padding:10px 12px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:#F0F2F5;margin-top:auto;
+}
+.fb-link-preview{font-size:10px;color:#65676B;text-transform:uppercase;letter-spacing:.04em}
+.fb-link-title{font-size:13px;font-weight:700;color:#050505}
+.fb-btn{
+  background:#E4E6EB;border:none;border-radius:6px;
+  font-size:13px;font-weight:700;padding:7px 14px;
+  cursor:pointer;white-space:nowrap;color:#050505;
+  font-family:-apple-system,'Segoe UI',sans-serif;
+}
+.carousel-row{display:flex;overflow:hidden}
+.carousel-slide{flex:0 0 calc(50% - 2px);aspect-ratio:1;position:relative}
+.carousel-slide+.carousel-slide{margin-left:4px}
+.cs-inner{
+  height:100%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  color:#fff;text-align:center;padding:16px;
+}
+.cs-price{font-size:26px;font-weight:900;letter-spacing:-.04em}
+.cs-lbl{font-size:10px;opacity:.65;margin-top:4px;text-transform:uppercase;letter-spacing:.08em}
+.cs-1{background:linear-gradient(160deg,#060D1A,#00D4A8)}
+.cs-2{background:linear-gradient(160deg,#1A0040,#D400A8)}
+.cs-tag{
+  position:absolute;bottom:8px;left:8px;
+  font-size:9px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  background:rgba(0,0,0,.5);color:#fff;padding:3px 8px;border-radius:3px;
+}
+.ads-meta-bar{
+  margin-top:36px;background:var(--bg-surface);
+  border:1px solid var(--bg-border);border-radius:10px;
+  padding:32px 40px;display:flex;
+  align-items:center;justify-content:space-between;gap:32px;
+}
+.ads-meta-bar h3{font-size:19px;font-weight:700;margin-bottom:8px;letter-spacing:-.02em}
+.ads-meta-bar p{font-size:14px;color:var(--text-muted);line-height:1.6;max-width:560px}
+
+@media(max-width:960px){
+  .ads-grid{grid-template-columns:1fr}
+  .ads-meta-bar{flex-direction:column;align-items:flex-start;padding:24px}
+  .hero-inner{grid-template-columns:1fr}
+  .terminal{display:none}
+  .ps-wrap{grid-template-columns:1fr}
+  .ps-col:first-child{border-right:none;border-bottom:2px solid var(--bg-border)}
+  .srv-grid{grid-template-columns:1fr}
+  .proc-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .proc-grid::before{display:none}
+  nav,footer{padding:16px 24px}
+  .container{padding:0 24px}
+  section{padding:64px 0}
+  .hero{padding:48px 0}
+}
+@media(max-width:540px){
+  .proc-grid{grid-template-columns:1fr}
+  .hero-metrics{flex-wrap:wrap;gap:20px}
+  h1{font-size:40px}
+  .ps-col{padding:28px}
+  .srv-card{padding:28px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <span>AGENT AKTYWNY</span><span class="sep">·</span>
+    <span>AUTOMATYZACJA AKTYWNA</span><span class="sep">·</span>
+    <span>0 RĘCZNYCH OPERACJI</span><span class="sep">·</span>
+    <span>24/7 BEZ PRZERWY</span><span class="sep">·</span>
+    <span>WDRŁENIE W 3 DNI</span><span class="sep">·</span>
+    <span>AGENT AKTYWNY</span><span class="sep">·</span>
+    <span>AUTOMATYZACJA AKTYWNA</span><span class="sep">·</span>
+    <span>0 RĘCZNYCH OPERACJI</span><span class="sep">·</span>
+    <span>24/7 BEZ PRZERWY</span><span class="sep">·</span>
+    <span>WDRŁENIE W 3 DNI</span><span class="sep">·</span>
+  </div>
+</div>
+
+<nav>
+  <a href="#" class="logo">ZERO<em>OPS</em></a>
+  <a href="#kontakt" class="nav-btn">Bezpłatna konsultacja</a>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">Automatyzacja AI dla biznesu w Polsce</div>
+        <h1>Twój biznes<br><em>działa sam.</em></h1>
+        <p class="hero-sub">Tworzę agentów AI, którzy przejmują powtarzalne zadania — 24 godziny na dobę, 7 dni w tygodniu. Bez dodatkowych etatów.</p>
+        <div class="hero-metrics">
+          <div>
+            <div class="metric-val"><em>0</em>h</div>
+            <div class="metric-lbl">ręcznej pracy</div>
+          </div>
+          <div>
+            <div class="metric-val">24<em>/7</em></div>
+            <div class="metric-lbl">agent aktywny</div>
+          </div>
+          <div>
+            <div class="metric-val">3<em> dni</em></div>
+            <div class="metric-lbl">wdrożenie</div>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <a href="#kontakt" class="btn-primary">Sprawdź co mogę zautomatyzować</a>
+          <a href="#uslugi" class="btn-ghost">Zobacz usługi ↓</a>
+        </div>
+      </div>
+      <div class="terminal">
+        <div class="t-bar">
+          <div class="dots">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div>
+          </div>
+          <span class="t-ttl">agent.zeroops — aktywny</span>
+        </div>
+        <div class="t-body">
+          <div class="t-row"><div class="t-ico ok">✓</div><div class="t-txt"><strong>Email od klienta</strong> odebrany i przetworzony <span class="badge badge-ok">AUTO</span></div></div>
+          <div class="t-row"><div class="t-ico ok">✓</div><div class="t-txt"><strong>Lead zakwalifikowany</strong> — budżet: OK <span class="badge badge-ok">HOT</span></div></div>
+          <div class="t-row"><div class="t-ico ok">✓</div><div class="t-txt"><strong>Oferta wysłana</strong> o 03:47 <span class="badge badge-warn">+RODO</span></div></div>
+          <div class="t-row"><div class="t-ico ok">✓</div><div class="t-txt"><strong>Faktura wystawiona</strong> i wysłana do klienta</div></div>
+          <div class="t-row"><div class="t-ico ok">✓</div><div class="t-txt"><strong>Raport dzienny</strong> wysłany → Telegram</div></div>
+          <div class="t-row"><div class="t-ico run">●</div><div class="t-txt" style="color:var(--text-muted)">Monitoring aktywny<span class="t-cursor"></span></div></div>
+        </div>
+        <div class="t-foot">
+          <div class="t-status"><div class="t-pulse"></div>Działa 24/7</div>
+          <div>Ty śpisz · <strong style="color:var(--accent)">Agent pracuje</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="logos-wrap">
+  <div class="container">
+    <p class="logos-lbl">Narzędzia i integracje</p>
+    <div class="logos-row">
+      <span class="logo-tag">n8n</span>
+      <span class="logo-tag">Claude AI</span>
+      <span class="logo-tag">Make.com</span>
+      <span class="logo-tag">Telegram</span>
+      <span class="logo-tag">Supabase</span>
+      <span class="logo-tag">OpenAI</span>
+      <span class="logo-tag">Vapi</span>
+      <span class="logo-tag">Netlify</span>
+      <span class="logo-tag">Gmail API</span>
+      <span class="logo-tag">WhatsApp API</span>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <div class="sec-head">
+      <div class="label">Przed i po</div>
+      <h2>Co zabiera Ci czas każdego dnia?</h2>
+      <p>Typowy właściciel małej firmy traci 3–5 godzin dziennie na zadania, które agent AI może przejąć w całości.</p>
+    </div>
+    <div class="ps-wrap">
+      <div class="ps-col">
+        <div class="ps-head">Bez ZEROOPS</div>
+        <ul class="ps-list">
+          <li>Ręczne odpowiadanie na maile i zapytania klientów</li>
+          <li>Zapisywanie leadów do Excela i śledzenie ręcznie</li>
+          <li>Powtarzalne wysyłanie ofert i przypomnień</li>
+          <li>Faktury wystawiane wieczorami, po godzinach</li>
+          <li>Brak informacji co dzieje się w firmie w weekend</li>
+          <li>Klienci czekają na odpowiedź godzinami</li>
+        </ul>
+      </div>
+      <div class="ps-col">
+        <div class="ps-head">Z ZEROOPS</div>
+        <ul class="ps-list">
+          <li>Agent AI odpowiada klientom w 30 sekund, całą dobę</li>
+          <li>Leady trafiają do CRM automatycznie z oceną i priorytetem</li>
+          <li>Oferty i przypomnienia wysyłają się same, w odpowiednim czasie</li>
+          <li>Faktury generowane i wysyłane bez Twojego udziału</li>
+          <li>Raport dzienny na Telegram — zawsze wiesz co się dzieje</li>
+          <li>Klient dostaje odpowiedź zanim skończy czytać formularz</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="uslugi">
+  <div class="container">
+    <div class="sec-head">
+      <div class="label">Usługi</div>
+      <h2>Wybierz poziom automatyzacji</h2>
+      <p>Każdy pakiet to gotowe wdrożenie. Bez subskrypcji, bez ukrytych kosztów — płacisz raz, agent działa stale.</p>
+    </div>
+    <div class="srv-grid">
+      <div class="srv-card">
+        <div class="srv-name">Starter</div>
+        <div class="srv-price">800 <small>zł</small></div>
+        <p class="srv-desc">Jeden agent AI, który rozwiązuje konkretny problem: FAQ bot, kwalifikacja leadów lub automatyczne odpowiedzi.</p>
+        <ul class="srv-feat">
+          <li>Jeden dedykowany agent AI</li>
+          <li>Integracja z Telegram lub email</li>
+          <li>Wdrożenie w 3–5 dni roboczych</li>
+          <li>2 tygodnie support po wdrożeniu</li>
+        </ul>
+        <a href="#kontakt" class="srv-cta">Zacznij od Starter</a>
+      </div>
+      <div class="srv-card feat">
+        <div class="srv-name">Pro</div>
+        <div class="srv-price">2 000 <small>zł</small></div>
+        <p class="srv-desc">Kompletna automatyzacja wybranego procesu — od leada po fakturę — z integracją Twoich narzędzi.</p>
+        <ul class="srv-feat">
+          <li>2–3 agenty AI w jednym systemie</li>
+          <li>Integracja CRM, Gmail, WhatsApp</li>
+          <li>Raporty dzienne na Telegram</li>
+          <li>Wdrożenie w 7–14 dni roboczych</li>
+          <li>Miesiąc support + drobne poprawki gratis</li>
+        </ul>
+        <a href="#kontakt" class="srv-cta">Wybierz Pro</a>
+      </div>
+      <div class="srv-card">
+        <div class="srv-name">System AI</div>
+        <div class="srv-price">4 500 <small>zł</small></div>
+        <p class="srv-desc">Pełny ekosystem AI dopasowany do Twojej firmy — sprzedaż, obsługa, operacje. Wszystko automatyczne.</p>
+        <ul class="srv-feat">
+          <li>Pełna mapa procesów i automatyzacja</li>
+          <li>Strona + agent + CRM + raporty</li>
+          <li>Głosowy agent AI opcjonalnie (Vapi)</li>
+          <li>Priorytetowe wdrożenie i support 3 mies.</li>
+        </ul>
+        <a href="#kontakt" class="srv-cta">Porozmawiaj o System AI</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="sec-head">
+      <div class="label">Jak to działa</div>
+      <h2>Od rozmowy do działającego agenta</h2>
+    </div>
+    <div class="proc-grid">
+      <div class="proc-step">
+        <div class="proc-num">01</div>
+        <div class="proc-title">Diagnoza</div>
+        <p class="proc-desc">30-minutowa rozmowa — identyfikuję gdzie tracisz czas i co da największy efekt. Bezpłatnie.</p>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">02</div>
+        <div class="proc-title">Projekt</div>
+        <p class="proc-desc">Mapuję procesy do automatyzacji i proponuję konkretne rozwiązanie z wyceną przed wdrożeniem.</p>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">03</div>
+        <div class="proc-title">Wdrożenie</div>
+        <p class="proc-desc">Buduję, testuję i konfiguruję agenta w Twoim środowisku. Dostajesz działający system, nie prototyp.</p>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">04</div>
+        <div class="proc-title">Działa 24/7</div>
+        <p class="proc-desc">Agent działa bez Twojej uwagi. Monitoruję system i reaguję gdy coś wymaga interwencji.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="sec-head">
+      <div class="label">Meta Ads</div>
+      <h2>Reklamy na Facebooku i Instagramie,<br>które napędzają sprzedaż</h2>
+      <p>Tworzę kampanie, kreacje foto i wideo, automatyzuję obsługę leadów z Meta — od pierwszego kliknięcia po zamknięty deal.</p>
+    </div>
+    <div class="ads-grid">
+      <div class="fb-card">
+        <div class="fb-hd"><div class="fb-av">Z</div><div><div class="fb-nm">ZEROOPS · Automatyzacja AI</div><div class="fb-sp"><span>Sponsorowane</span><span>·</span><span>🌍</span></div></div></div>
+        <div class="fb-txt">Twój agent AI odpowiada klientom w <strong>30 sekund</strong>, 24 godziny na dobę. Bez dodatkowych etatów.</div>
+        <div class="fb-media"><div class="ad-fill ad-bg-1" style="height:100%"><div class="ad-stat">0h</div><div class="ad-stat-lbl">ręcznej pracy dziennie</div><div class="ad-badge">ZEROOPS · Foto kreacja</div></div></div>
+        <div class="fb-cta-bar"><div><div class="fb-link-preview">zeroops.pl</div><div class="fb-link-title">Bezpłatna konsultacja</div></div><button class="fb-btn">Dowiedz się więcej</button></div>
+      </div>
+      <div class="fb-card">
+        <div class="fb-hd"><div class="fb-av">Z</div><div><div class="fb-nm">ZEROOPS · Automatyzacja AI</div><div class="fb-sp"><span>Sponsorowane</span><span>·</span><span>🌍</span></div></div></div>
+        <div class="fb-txt">Ile godzin dziennie tracisz na powtarzalne zadania? <strong>Automatyzuj — obejrzyj jak to działa.</strong></div>
+        <div class="fb-media-video"><div class="ad-fill ad-bg-2" style="height:100%"><div class="ad-headline">Agent AI<br>dla Twojej firmy</div><div class="ad-sub">Wdrożenie w 3 dni · 24/7 aktywny</div></div><div class="fb-play"><div class="fb-play-btn"></div></div></div>
+        <div class="fb-cta-bar"><div><div class="fb-link-preview">zeroops.pl</div><div class="fb-link-title">Sprawdź jak to działa</div></div><button class="fb-btn">Obejrzyj wideo</button></div>
+      </div>
+      <div class="fb-card">
+        <div class="fb-hd"><div class="fb-av">Z</div><div><div class="fb-nm">ZEROOPS · Automatyzacja AI</div><div class="fb-sp"><span>Sponsorowane</span><span>·</span><span>🌍</span></div></div></div>
+        <div class="fb-txt">3 pakiety automatyzacji. Każdy gotowy <strong>w 3–14 dni roboczych.</strong></div>
+        <div class="carousel-row"><div class="carousel-slide cs-1"><div class="cs-inner"><div class="cs-price">800 zł</div><div class="cs-lbl">Starter</div></div><div class="cs-tag">1 Agent AI</div></div><div class="carousel-slide cs-2"><div class="cs-inner"><div class="cs-price">2 000 zł</div><div class="cs-lbl">Pro</div></div><div class="cs-tag">Pełna automatyzacja</div></div></div>
+        <div class="fb-cta-bar"><div><div class="fb-link-preview">zeroops.pl</div><div class="fb-link-title">Wybierz pakiet</div></div><button class="fb-btn">Sprawdź ofertę</button></div>
+      </div>
+    </div>
+    <div class="ads-meta-bar">
+      <div><h3>Kompleksowa obsługa reklam Meta</h3><p>Strategia kampanii, kreacje foto i wideo, setup Piksela, grupy CAPI, A/B testy kreacji. Agent AI automatycznie kwalifikuje każdy lead z formularza i dzwoni w ciągu 5 minut.</p></div>
+      <a href="#kontakt" class="btn-primary" style="white-space:nowrap;flex-shrink:0">Zapytaj o Meta Ads</a>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt" class="cta-final">
+  <div class="container">
+    <div class="label" style="justify-content:center;margin-bottom:18px">Bezpłatna konsultacja</div>
+    <h2>Ile godzin tygodniowo<br>mógłbyś odzyskać?</h2>
+    <p>30 minut rozmowy wystarczy żeby dowiedzieć się co i jak można zautomatyzować w Twojej firmie.</p>
+    <div class="cta-group">
+      <a href="tel:+48733245757" class="btn-primary">Zadzwoń: +48 733 245 757</a>
+      <a href="https://wa.me/48733245757" class="btn-outline">WhatsApp</a>
+    </div>
+    <p class="cta-sub">Anatol Romanchyshen · Freelancer AI &amp; Automatyzacja · Polska</p>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">ZERO<em>OPS</em></span>
+  <span>© 2026 · Automatyzacja AI dla biznesu w Polsce</span>
+</footer>
+
+</body>
+</html>
