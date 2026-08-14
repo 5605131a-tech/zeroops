@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#09090E;--bg-s:#101018;--bg-m:#17171F;--brd:#222230;--gold:#C9A534;--gold-d:#A8882A;--gold-g:rgba(201,165,52,.07);--gold-b:rgba(201,165,52,.18);--text:#EDE8DE;--muted:#6E6C85;--dim:#28283A;--r:6px;--f:system-ui,-apple-system,'Segoe UI',sans-serif}
+:root{--bg:#09090E;--bg-s:#101018;--bg-m:#17171F;--brd:#222230;--gold:#C9A534;--gold-d:#A8882A;--gold-g:rgba(201,165,52,.07);--gold-b:rgba(201,165,52,.18);--text:#EDE8DE;--muted:#6E6C85;--dim:#28283A;--r:6px;--f:'Lato',system-ui,-apple-system,sans-serif}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--f);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 #sp{position:fixed;top:0;left:0;height:2px;background:var(--gold);width:0;z-index:1001;pointer-events:none;transition:width .08s linear}
