@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#09090E;--bg-s:#101018;--bg-m:#17171F;--brd:#222230;--gold:#C9A534;--gold-d:#A8882A;--gold-g:rgba(201,165,52,.07);--gold-b:rgba(201,165,52,.18);--text:#EDE8DE;--muted:#6E6C85;--dim:#28283A;--r:6px;--f:'Lato',system-ui,-apple-system,sans-serif}
 html{scroll-behavior:smooth}
